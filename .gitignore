@@ -1,1 +1,4 @@
 patches/
+*.o
+dwm.1
+dwm
