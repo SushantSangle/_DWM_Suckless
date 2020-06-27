@@ -1,4 +1,6 @@
 patches/
 *.o
+*.orig
+*.rej
 dwm.1
 dwm
