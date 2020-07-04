@@ -6,6 +6,7 @@ static const unsigned int gappx     = 9;
 static const unsigned int snap      = 20;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
+static const int CORNER_RADIUS      = 5;
 static const char *fonts[]          = { "Source Code Pro:size=14" };
 static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
@@ -20,20 +21,22 @@ static const char col_white[]       = "#ffffff";
 static const char *colors[][3]      = {
 	/*					fg         bg          border   */
 	[SchemeNorm] =	 { col_gray3, col_gray1,  col_gray2 },
+	[SchemeSel]  =	 { col_gray4, col_cyan,   col_red},
+	[SchemeNorm] =	 { col_gray3, col_gray1,  col_gray2 },
 	[SchemeSel]  =	 { col_gray4, col_cyan,   col_cyan },
-    [SchemeWarn] =	 { col_black, col_yellow, col_red },
-	[SchemeUrgent]=	 { col_white, col_red,    col_red }, 
-    { col_cyan , col_white,  col_white},
+	[SchemeWarn] =	 { col_black, col_yellow, col_red },
+	[SchemeUrgent]=	 { col_white, col_red,    col_red },
 };
 
 static const char *const autostart[] = {
   "dwmblocks",">>/dev/null",NULL,
    "flameshot",">>/dev/null",NULL,
+   "dunst",">>/dev/null",NULL,
 	NULL /* terminate */
 };
 
 /* tagging */
-static const char *tags[] = { "1", "2", "3", "4", "5"};
+static const char *tags[] = { "1", "2", "3", "4", "5","6"};
 
 /* launcher commands (They must be NULL terminated) */
 #define charCmd(cmd) (const char*[]){ "/bin/sh", "-c", cmd, NULL }  
@@ -58,7 +61,7 @@ static const Rule rules[] = {
 	{ "discord",     NULL,       NULL,       1<<3,      1,           -1 },
 	{ "minecraft-launcher",NULL, NULL,       1<<4,      0,           -1 },
 	{ "Gimp",        NULL,       NULL,       0,         1,           -1 },
-	{ "pulsemix",    NULL,       NULL,       0,         1,           -1 },
+	{ "st",    NULL,       NULL,       0,         1,           -1 },
 };
 /* layout(s) */
 static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
@@ -103,7 +106,10 @@ static Key keys[] = {
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
    	{ MODKEY,                       XK_w,      spawn,          SHCMD("firefox")},
    	{ MODKEY,                       XK_period, spawn,          SHCMD("dmenu-unicode")},
-	{ MODKEY,                       XK_b,      togglebar,      {0} },
+   	{ MODKEY|ShiftMask,             XK_e,      spawn,          SHCMD("dolphin")},
+   	{ MODKEY,                       XK_e,      spawn,          SHCMD("alacritty -e ranger")},
+   	{ MODKEY|ShiftMask,             XK_s,      spawn,          SHCMD("flameshot gui -p /home/sushant/Pictures/Screenshots")},
+    { MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_j,      movestack,      {.i = +1 } },
@@ -137,8 +143,10 @@ static Key keys[] = {
 	TAGKEYS(                        XK_3,                      2)
 	TAGKEYS(                        XK_4,                      3)
 	TAGKEYS(                        XK_5,                      4)
-    { MODKEY|ShiftMask,             XK_r,      self_restart,   {0} },
+	TAGKEYS(                        XK_6,                      5)
+    { MODKEY|ControlMask|ShiftMask,             XK_q,      self_restart,   {0} },
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
+//	{ 0,                       XF86AudioLowerVolume,  spawn,SHCMD("pamixer -d 5;killall -44 dwmblocks") },
 };
 
 /* button definitions */
@@ -147,7 +155,7 @@ static Button buttons[] = {
 	/* click                event mask      button          function        argument */
 	{ ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
 	{ ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} },
-	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
+	{ ClkWinTitle,          0,              Button2,        killclient,     {0} },
 	{ ClkStatusText,        0,              Button1,        sigdwmblocks,   {.i = 1} },
 	{ ClkStatusText,        MODKEY|ShiftMask,Button1,       sigdwmblocks,   {.i = 6} },
 	{ ClkStatusText,        0,              Button2,        sigdwmblocks,   {.i = 2} },
@@ -156,7 +164,7 @@ static Button buttons[] = {
     { ClkStatusText,        0,              Button5,        sigdwmblocks,   {.i = 5} },
 	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
 	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
-	{ ClkClientWin,         MODKEY|ShiftMask,         Button1,        resizemouse,    {0} },
+	{ ClkClientWin,         MODKEY|ShiftMask,Button1,       resizemouse,    {0} },
 	{ ClkTagBar,            0,              Button1,        view,           {0} },
 	{ ClkTagBar,            0,              Button3,        toggleview,     {0} },
 	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
