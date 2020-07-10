@@ -17,15 +17,19 @@ static const char col_black[]       = "#000000";
 static const char col_red[]         = "#ff0000";
 static const char col_yellow[]      = "#ffff00";
 static const char col_white[]       = "#ffffff";
+static const unsigned int baralpha = 0x06;
+static const unsigned int borderalpha = 0x06;
+
 
 static const char *colors[][3]      = {
 	/*					fg         bg          border   */
 	[SchemeNorm] =	 { col_gray3, col_gray1,  col_gray2 },
-	[SchemeSel]  =	 { col_gray4, col_cyan,   col_red},
-	[SchemeNorm] =	 { col_gray3, col_gray1,  col_gray2 },
 	[SchemeSel]  =	 { col_gray4, col_cyan,   col_cyan },
-	[SchemeWarn] =	 { col_black, col_yellow, col_red },
-	[SchemeUrgent]=	 { col_white, col_red,    col_red },
+};
+static const unsigned int alphas[][3]      = {
+	/*               fg      bg        border     */
+	[SchemeNorm] = { OPAQUE, baralpha, borderalpha },
+	[SchemeSel]  = { OPAQUE, baralpha, borderalpha },
 };
 
 static const char *const autostart[] = {
@@ -61,7 +65,8 @@ static const Rule rules[] = {
 	{ "discord",     NULL,       NULL,       1<<3,      1,           -1 },
 	{ "minecraft-launcher",NULL, NULL,       1<<4,      0,           -1 },
 	{ "Gimp",        NULL,       NULL,       0,         1,           -1 },
-	{ "st",    NULL,       NULL,       0,         1,           -1 },
+	{ "St",    NULL,       NULL,       0,         1,           -1 },
+	{ "Blueman-manager",    NULL,       NULL,       0,         1,           -1 },
 };
 /* layout(s) */
 static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
@@ -99,6 +104,7 @@ static const char *termcmd[]  = { "alacritty", NULL };
 
 #include "selfrestart.c"
 #include "movestack.c"
+#include <X11/XF86keysym.h>
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -121,6 +127,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    toggleAttachBelow, {0} },
 	{ MODKEY,                       XK_q,      killclient,     {0} },
+    { MODKEY|ShiftMask,             XK_f,      fullscreen,     {0} },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
@@ -128,7 +135,6 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_r,      setlayout,      {.v = &layouts[4]} },
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
-	{ MODKEY|ShiftMask,             XK_f,      togglefullscr,  {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
 	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
@@ -144,9 +150,13 @@ static Key keys[] = {
 	TAGKEYS(                        XK_4,                      3)
 	TAGKEYS(                        XK_5,                      4)
 	TAGKEYS(                        XK_6,                      5)
-    { MODKEY|ControlMask|ShiftMask,             XK_q,      self_restart,   {0} },
+    { MODKEY|ControlMask|ShiftMask, XK_q,      self_restart,   {0} },
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
-//	{ 0,                       XF86AudioLowerVolume,  spawn,SHCMD("pamixer -d 5;killall -44 dwmblocks") },
+	{ 0,                       XF86XK_AudioLowerVolume,  spawn,SHCMD("pamixer -d 5;killall -42 dwmblocks") },
+	{ 0,                       XF86XK_AudioRaiseVolume,  spawn,SHCMD("pamixer -i 5;killall -42 dwmblocks") },
+	{ 0,                       XF86XK_AudioMute,         spawn,SHCMD("pamixer -t;killall -42 dwmblocks") },
+	{ ShiftMask,               XK_F11,         spawn,    SHCMD("xbacklight -dec 3;killall -45 dwmblocks") },
+	{ ShiftMask,               XK_F12,         spawn,    SHCMD("xbacklight -inc 3;killall -45 dwmblocks") },
 };
 
 /* button definitions */
