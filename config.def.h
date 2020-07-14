@@ -17,19 +17,12 @@ static const char col_black[]       = "#000000";
 static const char col_red[]         = "#e65747";
 static const char col_yellow[]      = "#ffff00";
 static const char col_white[]       = "#ffffff";
-static const unsigned int baralpha = 0x06;
-static const unsigned int borderalpha = 0x06;
 
 
 static const char *colors[][3]      = {
 	/*					fg         bg          border   */
 	[SchemeNorm] =	 { col_gray3, col_gray1,  col_gray2 },
 	[SchemeSel]  =	 { col_gray4, col_red,   col_red },
-};
-static const unsigned int alphas[][3]      = {
-	/*               fg      bg        border     */
-	[SchemeNorm] = { OPAQUE, baralpha, borderalpha },
-	[SchemeSel]  = { OPAQUE, baralpha, borderalpha },
 };
 
 static const char *const autostart[] = {
@@ -122,8 +115,9 @@ static Key keys[] = {
     { MODKEY|ShiftMask,             XK_k,      movestack,      {.i = -1 } },
     { MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
 	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
-	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
-	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
+	{ MODKEY|ShiftMask,             XK_h,      setmfact,       {.f = -0.05} },
+	{ MODKEY|ShiftMask,             XK_l,      setmfact,       {.f = +0.05} },
+	{ MODKEY,                       XK_l,      spawn,          SHCMD("dm-tool switch-to-greeter")},
 	{ MODKEY|ShiftMask,             XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    toggleAttachBelow, {0} },
 	{ MODKEY,                       XK_q,      killclient,     {0} },
