@@ -6,8 +6,9 @@ static const unsigned int gappx     = 9;
 static const unsigned int snap      = 20;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const int CORNER_RADIUS      = 5;
-static const char *fonts[]          = { "Source Code Pro:size=14" };
+static const int horizpadbar        = 2;        /* horizontal padding for statusbar */
+static const int vertpadbar         = 10;        /* vertical padding for statusbar */
+static const char *fonts[]          = { "nunito:size=14" };
 static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
@@ -115,9 +116,9 @@ static Key keys[] = {
     { MODKEY|ShiftMask,             XK_k,      movestack,      {.i = -1 } },
     { MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
 	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_h,      setmfact,       {.f = -0.05} },
-	{ MODKEY|ShiftMask,             XK_l,      setmfact,       {.f = +0.05} },
-	{ MODKEY,                       XK_l,      spawn,          SHCMD("dm-tool switch-to-greeter")},
+	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
+	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
+	{ MODKEY|ShiftMask,             XK_l,      spawn,          SHCMD("dm-tool switch-to-greeter")},
 	{ MODKEY|ShiftMask,             XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    toggleAttachBelow, {0} },
 	{ MODKEY,                       XK_q,      killclient,     {0} },
@@ -149,8 +150,8 @@ static Key keys[] = {
 	{ 0,                       XF86XK_AudioLowerVolume,  spawn,SHCMD("pamixer -d 5;killall -42 dwmblocks") },
 	{ 0,                       XF86XK_AudioRaiseVolume,  spawn,SHCMD("pamixer -i 5;killall -42 dwmblocks") },
 	{ 0,                       XF86XK_AudioMute,         spawn,SHCMD("pamixer -t;killall -42 dwmblocks") },
-	{ ShiftMask,               XK_F11,         spawn,    SHCMD("xbacklight -dec 3;killall -45 dwmblocks") },
-	{ ShiftMask,               XK_F12,         spawn,    SHCMD("xbacklight -inc 3;killall -45 dwmblocks") },
+	{ MODKEY,                       XK_F11,         spawn,    SHCMD("xbacklight -dec 3;killall -45 dwmblocks") },
+	{ MODKEY,                       XK_F12,         spawn,    SHCMD("xbacklight -inc 3;killall -45 dwmblocks") },
 };
 
 /* button definitions */
