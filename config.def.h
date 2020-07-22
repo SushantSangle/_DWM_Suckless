@@ -15,14 +15,15 @@ static const char col_gray3[]       = "#bbbbbb";
 static const char col_gray4[]       = "#eeeeee";
 static const char col_cyan[]        = "#005577";
 static const char col_black[]       = "#000000";
-static const char col_red[]         = "#e65747";
+static const char col_red[]         = "#f4544c";
 static const char col_yellow[]      = "#ffff00";
 static const char col_white[]       = "#ffffff";
-
+static const char col_blue[]        = "#1f367a";
+static const char col_pale[]        = "#e4dfd5";
 
 static const char *colors[][3]      = {
 	/*					fg         bg          border   */
-	[SchemeNorm] =	 { col_gray3, col_gray1,  col_gray2 },
+	[SchemeNorm] =	 { col_pale, col_gray1,  col_gray2 },
 	[SchemeSel]  =	 { col_gray4, col_red,   col_red },
 };
 
@@ -30,6 +31,8 @@ static const char *const autostart[] = {
   "dwmblocks",">>/dev/null",NULL,
    "flameshot",">>/dev/null",NULL,
    "dunst",">>/dev/null",NULL,
+   "xcompmgr",">>/dev/null",NULL,
+   "lxpolkit",">>/dev/null",NULL,
 	NULL /* terminate */
 };
 
