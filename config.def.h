@@ -2,7 +2,7 @@
 
 /* appearance */
 static const unsigned int borderpx  = 2;        /* border pixel of windows */
-static const unsigned int gappx     = 9;
+static const unsigned int gappx     = 0;
 static const unsigned int snap      = 20;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
@@ -20,11 +20,20 @@ static const char col_yellow[]      = "#ffff00";
 static const char col_white[]       = "#ffffff";
 static const char col_blue[]        = "#1f367a";
 static const char col_pale[]        = "#e4dfd5";
+static const unsigned int baralpha = 0xa0;
+static const unsigned int borderalpha = OPAQUE;
+static const unsigned int selalpha = 0xdd;
+
 
 static const char *colors[][3]      = {
 	/*					fg         bg          border   */
-	[SchemeNorm] =	 { col_pale, col_gray1,  col_gray2 },
+	[SchemeNorm] =	 { col_pale, col_black,  col_gray2 },
 	[SchemeSel]  =	 { col_gray4, col_red,   col_red },
+};
+static const unsigned int alphas[][3]      = {
+	/*               fg      bg        border     */
+	[SchemeNorm] = { OPAQUE, baralpha, borderalpha },
+	[SchemeSel]  = { OPAQUE, selalpha, borderalpha },
 };
 
 static const char *const autostart[] = {
@@ -44,7 +53,8 @@ static const char *tags[] = { "1", "2", "3", "4", "5","6"};
 
 static const Launcher launchers[] = {
        /* command       name to display */
-	{ charCmd("discord"),          "|  " },
+    { charCmd("rofi -show drun -show-icons -matching fuzzy"), "[Menu ]"},
+    { charCmd("discord"),          "|  " },
     { charCmd("telegram-desktop"), "" },
     { charCmd("dmenu-unicode"),    "  |" },
 };
@@ -64,6 +74,7 @@ static const Rule rules[] = {
 	{ "Gimp",        NULL,       NULL,       0,         1,           -1 },
 	{ "St",    NULL,       NULL,       0,         1,           -1 },
 	{ "Blueman-manager",    NULL,       NULL,       0,         1,           -1 },
+	{ "gnome-contacts",    NULL,       NULL,       0,         1,           -1 },
 };
 /* layout(s) */
 static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
@@ -107,11 +118,13 @@ static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ Mod1Mask,                     XK_space,  spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
-   	{ MODKEY,                       XK_w,      spawn,          SHCMD("firefox")},
+	{ MODKEY,                       XK_w,      spawn,          SHCMD("firefox")},
    	{ MODKEY,                       XK_period, spawn,          SHCMD("dmenu-unicode")},
    	{ MODKEY|ShiftMask,             XK_e,      spawn,          SHCMD("dolphin")},
    	{ MODKEY,                       XK_e,      spawn,          SHCMD("alacritty -e ranger")},
    	{ MODKEY|ShiftMask,             XK_s,      spawn,          SHCMD("flameshot gui -p /home/sushant/Pictures/Screenshots")},
+   	{ 0,                            XK_Print,  spawn,          SHCMD("flameshot full -p /home/sushant/Pictures/Screenshots")},
+   	{ MODKEY,                       XK_Print,  spawn,          SHCMD("flameshot full -c")},
     { MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
