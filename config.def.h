@@ -53,10 +53,7 @@ static const char *tags[] = { "1", "2", "3", "4", "5","6"};
 
 static const Launcher launchers[] = {
        /* command       name to display */
-    { charCmd("rofi -show drun -show-icons -matching fuzzy"), "[Menu ]"},
-    { charCmd("discord"),          "|  " },
-    { charCmd("telegram-desktop"), "" },
-    { charCmd("dmenu-unicode"),    "  |" },
+    { charCmd("rofi -show drun -show-icons -matching fuzzy"), "[Menu]"},
 };
 
 static const Rule rules[] = {
