@@ -2,7 +2,7 @@
 
 /* appearance */
 static const unsigned int borderpx  = 2;        /* border pixel of windows */
-static const unsigned int gappx     = 0;
+static const unsigned int gappx     = 10;
 static const unsigned int snap      = 20;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
@@ -20,9 +20,9 @@ static const char col_yellow[]      = "#ffff00";
 static const char col_white[]       = "#ffffff";
 static const char col_blue[]        = "#1f367a";
 static const char col_pale[]        = "#e4dfd5";
-static const unsigned int baralpha = 0xa0;
+static const unsigned int baralpha = 0x0;
 static const unsigned int borderalpha = OPAQUE;
-static const unsigned int selalpha = 0xdd;
+static const unsigned int selalpha = OPAQUE;
 
 
 static const char *colors[][3]      = {
@@ -37,7 +37,7 @@ static const unsigned int alphas[][3]      = {
 };
 
 static const char *const autostart[] = {
-  "dwmblocks",">>/dev/null",NULL,
+   "dwmblocks",">>/dev/null",NULL,
    "flameshot",">>/dev/null",NULL,
    "dunst",">>/dev/null",NULL,
    "xcompmgr",">>/dev/null",NULL,
