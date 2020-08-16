@@ -2,7 +2,7 @@
 
 /* appearance */
 static const unsigned int borderpx  = 2;        /* border pixel of windows */
-static const unsigned int gappx     = 10;
+static const unsigned int gappx     = 0;
 static const unsigned int snap      = 20;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
@@ -20,15 +20,16 @@ static const char col_yellow[]      = "#ffff00";
 static const char col_white[]       = "#ffffff";
 static const char col_blue[]        = "#1f367a";
 static const char col_pale[]        = "#e4dfd5";
-static const unsigned int baralpha = 0x0;
+static const unsigned int baralpha = 204;
 static const unsigned int borderalpha = OPAQUE;
-static const unsigned int selalpha = OPAQUE;
+static const unsigned int selalpha = baralpha;
 
 
 static const char *colors[][3]      = {
 	/*					fg         bg          border   */
 	[SchemeNorm] =	 { col_pale, col_black,  col_gray2 },
-	[SchemeSel]  =	 { col_gray4, col_red,   col_red },
+	[SchemeSel]  =	 { col_red, col_black,   col_red },
+
 };
 static const unsigned int alphas[][3]      = {
 	/*               fg      bg        border     */
@@ -37,6 +38,7 @@ static const unsigned int alphas[][3]      = {
 };
 
 static const char *const autostart[] = {
+    "rolling_wallpaper",">>/dev/null",NULL,
    "dwmblocks",">>/dev/null",NULL,
    "flameshot",">>/dev/null",NULL,
    "dunst",">>/dev/null",NULL,
@@ -49,7 +51,7 @@ static const char *const autostart[] = {
 static const char *tags[] = { "1", "2", "3", "4", "5","6"};
 
 /* launcher commands (They must be NULL terminated) */
-#define charCmd(cmd) (const char*[]){ "/bin/sh", "-c", cmd, NULL }  
+#define charCmd(cmd) (const char*[]){ "/bin/sh", "-c", cmd, NULL }
 
 static const Launcher launchers[] = {
        /* command       name to display */
@@ -89,6 +91,8 @@ static const Layout layouts[] = {
 	{ "[M]",     monocle },
     { "[🐚]",     spiral },
     { "[\\]",    dwindle },
+    { "|M|",      centeredmaster },
+	{ ">M>",      centeredfloatingmaster },
 };
 
 /* key definitions */
@@ -143,6 +147,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
 	{ MODKEY,                       XK_r,      setlayout,      {.v = &layouts[3]} },
 	{ MODKEY|ShiftMask,             XK_r,      setlayout,      {.v = &layouts[4]} },
+    { MODKEY,                       XK_u,      setlayout,      {.v = &layouts[5]} },
+	{ MODKEY,                       XK_o,      setlayout,      {.v = &layouts[6]} },
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY|ShiftMask,             XK_f,      togglefullscr,  {0} },
@@ -170,24 +176,29 @@ static Key keys[] = {
 	{ MODKEY,                       XK_F12,         spawn,    SHCMD("xbacklight -inc 3;killall -45 dwmblocks") },
 };
 
+#define LEFT_CLICK Button1
+#define RIGHT_CLICK Button3
+#define MIDDLE_CLICK Button2
+#define SCROLL_UP_TRACKPAD Button5
+#define SCROLL_DOWN_TRACKPAD Button4
 /* button definitions */
 /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
 static Button buttons[] = {
-	/* click                event mask      button          function        argument */
-	{ ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
-	{ ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} },
-	{ ClkWinTitle,          0,              Button2,        killclient,     {0} },
-	{ ClkStatusText,        0,              Button1,        sigdwmblocks,   {.i = 1} },
-	{ ClkStatusText,        MODKEY|ShiftMask,Button1,       sigdwmblocks,   {.i = 6} },
-	{ ClkStatusText,        0,              Button2,        sigdwmblocks,   {.i = 2} },
-	{ ClkStatusText,        0,              Button3,        sigdwmblocks,   {.i = 3} },
-	{ ClkStatusText,        0,              Button4,        sigdwmblocks,   {.i = 4} },
-    { ClkStatusText,        0,              Button5,        sigdwmblocks,   {.i = 5} },
-	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
-	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
-	{ ClkClientWin,         MODKEY|ShiftMask,Button1,       resizemouse,    {0} },
-	{ ClkTagBar,            0,              Button1,        view,           {0} },
-	{ ClkTagBar,            0,              Button3,        toggleview,     {0} },
-	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
-	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
+	/* click                event mask      button               function        argument */
+	{ ClkLtSymbol,          0,              LEFT_CLICK,             setlayout,      {0} },
+	{ ClkLtSymbol,          0,              RIGHT_CLICK,            setlayout,      {.v = &layouts[2]} },
+	{ ClkWinTitle,          0,              MIDDLE_CLICK,           killclient,     {0} },
+	{ ClkStatusText,        0,              LEFT_CLICK,             sigdwmblocks,   {.i = 1} },
+	{ ClkStatusText,        MODKEY|ShiftMask,LEFT_CLICK,            sigdwmblocks,   {.i = 6} },
+	{ ClkStatusText,        0,              MIDDLE_CLICK,           sigdwmblocks,   {.i = 2} },
+	{ ClkStatusText,        0,              RIGHT_CLICK,            sigdwmblocks,   {.i = 3} },
+	{ ClkStatusText,        0,              SCROLL_DOWN_TRACKPAD,   sigdwmblocks,   {.i = 4} },
+    { ClkStatusText,        0,              SCROLL_UP_TRACKPAD,     sigdwmblocks,   {.i = 5} },
+	{ ClkClientWin,         MODKEY,         LEFT_CLICK,             movemouse,      {0} },
+	{ ClkClientWin,         MODKEY,         MIDDLE_CLICK,           togglefloating, {0} },
+	{ ClkClientWin,         MODKEY|ShiftMask,LEFT_CLICK,            resizemouse,    {0} },
+	{ ClkTagBar,            0,              LEFT_CLICK,             view,           {0} },
+	{ ClkTagBar,            0,              RIGHT_CLICK,            toggleview,     {0} },
+	{ ClkTagBar,            MODKEY,         LEFT_CLICK,             tag,            {0} },
+	{ ClkTagBar,            MODKEY,         RIGHT_CLICK,            toggletag,      {0} },
 };
