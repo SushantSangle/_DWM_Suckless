@@ -1,12 +1,12 @@
-dwm - dynamic window manager
+# dwm - dynamic window manager
 ============================
 dwm is an extremely fast, small, and dynamic window manager for X.
+This is my customized version of the original dwm provided by [suckess.org](https://dwm.suckless.org/)
 
-
-Requirements
+### Requirements
 ------------
-In order to build dwm you need the Xlib header files.
-
+- In order to build dwm you need the Xlib header files.
+- If you want Colored emoji support you must install lbxft-bgrafrom AUR if you are using any arch based distro or install the equivalent dependency for your distro.
 
 Installation
 ------------
@@ -40,9 +40,9 @@ like this in your .xinitrc:
     	sleep 1
     done &
     exec dwm
-
+This build comes with bundled dwmblocks which lets you have custom scripts for a single statusbar module, you can provide different scripts for each module there.
 
 Configuration
 -------------
-The configuration of dwm is done by creating a custom config.h
+The configuration of dwm is done by creating a custom config.def.h
 and (re)compiling the source code.
