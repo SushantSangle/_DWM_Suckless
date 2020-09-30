@@ -20,7 +20,7 @@ static const char col_yellow[]      = "#ffff00";
 static const char col_white[]       = "#ffffff";
 static const char col_blue[]        = "#1f367a";
 static const char col_pale[]        = "#e4dfd5";
-static const unsigned int baralpha = 204;
+static const unsigned int baralpha = 100;
 static const unsigned int borderalpha = OPAQUE;
 static const unsigned int selalpha = baralpha;
 
@@ -56,7 +56,7 @@ static const char *tags[] = { "1", "2", "3", "4", "5","6"};
 
 static const Launcher launchers[] = {
        /* command       name to display */
-    { charCmd("rofi -show drun -show-icons -matching fuzzy"), "[Menu]"},
+    { charCmd("launcher.sh"), "[Menu]"},
 };
 
 static const Rule rules[] = {
@@ -174,6 +174,9 @@ static Key keys[] = {
 	{ 0,                       XF86XK_AudioLowerVolume,  spawn,SHCMD("pamixer -d 5;killall -42 dwmblocks") },
 	{ 0,                       XF86XK_AudioRaiseVolume,  spawn,SHCMD("pamixer -i 5;killall -42 dwmblocks") },
 	{ 0,                       XF86XK_AudioMute,         spawn,SHCMD("pamixer -t;killall -42 dwmblocks") },
+	{ 0,                       XF86XK_AudioPrev,         spawn,SHCMD("playerctl previous") },
+	{ 0,                       XF86XK_AudioNext,         spawn,SHCMD("playerctl next") },
+	{ 0,                       XF86XK_AudioPlay,         spawn,SHCMD("playerctl play-pause") },
 	{ MODKEY,                       XK_F11,         spawn,    SHCMD("xbacklight -dec 3;killall -45 dwmblocks") },
 	{ MODKEY,                       XK_F12,         spawn,    SHCMD("xbacklight -inc 3;killall -45 dwmblocks") },
 };
