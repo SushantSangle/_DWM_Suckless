@@ -7,6 +7,7 @@ static const unsigned int snap      = 20;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const int horizpadbar        = 2;        /* horizontal padding for statusbar */
+static const int swallowfloating    = 0;
 static const int vertpadbar         = 10;        /* vertical padding for statusbar */
 static const char *fonts[]          = { "nunito:size=14" };
 static const char col_gray1[]       = "#222222";
@@ -64,17 +65,19 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "firefox",     NULL,       NULL,       2,         0,           -1 },
-	{ "TelegramDesktop",NULL,    NULL,       1<<3,      0,           -1 },
-	{ "code-oss"    ,NULL,       NULL,       1<<2,      0,           -1 },
-	{ "subl"        ,NULL,       NULL,       1<<2,      0,           -1 },
-	{ "discord",     NULL,       NULL,       1<<3,      1,           -1 },
-	{ "minecraft-launcher",NULL, NULL,       1<<4,      0,           -1 },
-	{ "Gimp",        NULL,       NULL,       0,         1,           -1 },
-	{ "St",    NULL,       NULL,       0,         1,           -1 },
-	{ "Blueman-manager",    NULL,       NULL,       0,         1,           -1 },
-	{ "gnome-contacts",    NULL,       NULL,       0,         1,           -1 },
+	/* class      instance    title       tags mask     isfloating   isTerminal  noswallow   monitor */
+	{ "firefox",     NULL,       NULL,       2,         0,           0,          -1,         -1 },
+	{ "TelegramDesktop",NULL,    NULL,       1<<3,      0,           0,          -1,         -1 },
+	{ "code-oss"    ,NULL,       NULL,       1<<2,      0,           0,          -1,         -1 },
+	{ "subl"        ,NULL,       NULL,       1<<2,      0,           0,          -1,         -1 },
+	{ "discord",     NULL,       NULL,       1<<3,      1,           0,          -1,         -1 },
+	{ "minecraft-launcher",NULL, NULL,       1<<4,      0,           0,          -1,         -1 },
+	{ "Gimp",        NULL,       NULL,       0,         1,           0,          -1,         -1 },
+	{ "St",					 NULL,       NULL,       0,         1,           1,           0,         -1 },
+	{ "Blueman-manager",NULL,    NULL,       0,         1,           0,          -1,         -1 },
+	{ "gnome-contacts", NULL,    NULL,       0,         1,           0,          -1,         -1 },
+	{ "Alacritty",   NULL,       NULL,       0,         0,           1,           0,         -1 },
+	{ NULL,      NULL,     "Event Tester",   0,         0,           0,           1,         -1 },
 };
 /* layout(s) */
 static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
